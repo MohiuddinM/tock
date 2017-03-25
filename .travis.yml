@@ -25,7 +25,7 @@ before_script: (cargo install rustfmt || true)
 
 script:
   - export PATH=$HOME/.cargo/bin:$PATH
-  - if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then tools/run_cargo_fmt.sh diff; fi
-  - if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then make allboards; fi
-  - if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then pushd userland/examples && ./build_all.sh; fi
+  - tools/run_cargo_fmt.sh diff
+  - make allboards
+  - pushd userland/examples && ./build_all.sh
 
