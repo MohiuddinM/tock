@@ -66,8 +66,8 @@ LIBTOCK_OBJS_$(1) += $$(patsubst $$(LIBTOCK_DIR)/%.c,$$(LIBTOCK_BUILDDIR)/$(1)/%
 
 $$(LIBTOCK_BUILDDIR)/$(1)/libtock.a: $$(LIBTOCK_OBJS_$(1)) | $$(LIBTOCK_BUILDDIR)/$(1)
 	$$(TRACE_AR)
-	$$(Q)$$(AR) rc $$@ $$^
-	$$(Q)$$(RANLIB) $$@
+	$$(Q)$$(AR) rc $$@ $$^ --plugin=$$$$($$(CC) --print-file-name=liblto_plugin.so)
+	$$(Q)$$(RANLIB) $$@ --plugin=$$$$($$(CC) --print-file-name=liblto_plugin.so)
 endef
 
 # actually generate the rules for each architecture
