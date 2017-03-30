@@ -60,14 +60,14 @@ TRACE_LST = @echo " "
 ELF2TBF_ARGS += -v
 else
 Q=@
-TRACE_BIN = @echo " BIN       " $@
-TRACE_DEP = @echo " DEP       " $<
-TRACE_CC  = @echo "  CC       " $<
-TRACE_CXX = @echo " CXX       " $<
-TRACE_LD  = @echo "  LD       " $@
-TRACE_AR  = @echo "  AR       " $@
-TRACE_AS  = @echo "  AS       " $<
-TRACE_LST = @echo " LST       " $<
+TRACE_BIN = @echo " BIN"
+TRACE_DEP = @echo " DEP"
+TRACE_CC  = @echo "  CC"
+TRACE_CXX = @echo " CXX"
+TRACE_LD  = @echo "  LD"
+TRACE_AR  = @echo "  AR"
+TRACE_AS  = @echo "  AS"
+TRACE_LST = @echo " LST"
 endif
 
 endif
