@@ -53,13 +53,13 @@ $$(LIBTOCK_BUILDDIR)/$(1):
 	$$(Q)mkdir -p $$@
 
 $$(LIBTOCK_BUILDDIR)/$(1)/%.o: $$(LIBTOCK_DIR)/%.c | $$(LIBTOCK_BUILDDIR)/$(1)
-	$$(TRACE_DEP)
+	$$(TRACE_DEP) $(1)
 	$$(Q)$$(CC) $$(CFLAGS) -mcpu=$(1) $$(CPPFLAGS) -MF"$$(@:.o=.d)" -MG -MM -MP -MT"$$(@:.o=.d)@" -MT"$$@" "$$<"
-	$$(TRACE_CC)
+	$$(TRACE_CC) $(1)
 	$$(Q)$$(CC) $$(CFLAGS) -mcpu=$(1) $$(CPPFLAGS) -c -o $$@ $$<
 
 $$(LIBTOCK_BUILDDIR)/$(1)/%.o: %.S | $$(LIBTOCK_BUILDDIR)/$(1)
-	$$(TRACE_AS)
+	$$(TRACE_AS) $(1)
 	$$(Q)$$(AS) $$(ASFLAGS) -mcpu=$(1) $$(CPPFLAGS) -c -o $$@ $$<
 
 LIBTOCK_OBJS_$(1) += $$(patsubst $$(LIBTOCK_DIR)/%.s,$$(LIBTOCK_BUILDDIR)/$(1)/%.o,$$(LIBTOCK_AS_SRCS))

@@ -49,14 +49,14 @@ endif
 # If environment variable V is non-empty, be verbose
 ifneq ($(V),)
 Q=
-TRACE_BIN =
-TRACE_DEP =
-TRACE_CC  =
-TRACE_CXX =
-TRACE_LD  =
-TRACE_AR  =
-TRACE_AS  =
-TRACE_LST =
+TRACE_BIN = @echo " "
+TRACE_DEP = @echo " "
+TRACE_CC  = @echo " "
+TRACE_CXX = @echo " "
+TRACE_LD  = @echo " "
+TRACE_AR  = @echo " "
+TRACE_AS  = @echo " "
+TRACE_LST = @echo " "
 ELF2TBF_ARGS += -v
 else
 Q=@
