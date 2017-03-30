@@ -49,6 +49,7 @@ clean::
 define LIBTOCK_RULES
 
 $$(LIBTOCK_BUILDDIR)/$(1):
+	@echo "MAKE BUILD DIR $$@"
 	$$(Q)mkdir -p $$@
 
 $$(LIBTOCK_BUILDDIR)/$(1)/%.o: $$(LIBTOCK_DIR)/%.c | $$(LIBTOCK_BUILDDIR)/$(1)
