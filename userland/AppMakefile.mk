@@ -113,21 +113,21 @@ $$(BUILDDIR)/$(1):
 # First step doesn't actually compile, just generate header dependency information
 # More info on our approach here: http://stackoverflow.com/questions/97338
 $$(BUILDDIR)/$(1)/%.o: %.c | $$(BUILDDIR)/$(1)
-	$$(TRACE_DEP)
+	$$(TRACE_DEP) $(1)
 	$$(Q)$$(CC) $$(CFLAGS) -mcpu=$(1) $$(CPPFLAGS) -MF"$$(@:.o=.d)" -MG -MM -MP -MT"$$(@:.o=.d)@" -MT"$$@" "$$<"
-	$$(TRACE_CC)
+	$$(TRACE_CC) $(1)
 	$$(Q)$$(CC) $$(CFLAGS) -mcpu=$(1) $$(CPPFLAGS) -c -o $$@ $$<
 
 $$(BUILDDIR)/$(1)/%.o: %.cc | $$(BUILDDIR)/$(1)
-	$$(TRACE_DEP)
+	$$(TRACE_DEP) $(1)
 	$$(Q)$$(CXX) $$(CXXFLAGS) -mcpu=$(1) $$(CPPFLAGS) -MF"$$(@:.o=.d)" -MG -MM -MP -MT"$$(@:.o=.d)@" -MT"$$@" "$$<"
-	$$(TRACE_CXX)
+	$$(TRACE_CXX) $(1)
 	$$(Q)$$(CXX) $$(CXXFLAGS) -mcpu=$(1) $$(CPPFLAGS) -c -o $$@ $$<
 
 $$(BUILDDIR)/$(1)/%.o: %.cpp | $$(BUILDDIR)/$(1)
-	$$(TRACE_DEP)
+	$$(TRACE_DEP) $(1)
 	$$(Q)$$(CXX) $$(CXXFLAGS) -mcpu=$(1) $$(CPPFLAGS) -MF"$$(@:.o=.d)" -MG -MM -MP -MT"$$(@:.o=.d)@" -MT"$$@" "$$<"
-	$$(TRACE_CXX)
+	$$(TRACE_CXX) $(1)
 	$$(Q)$$(CXX) $$(CXXFLAGS) -mcpu=$(1) $$(CPPFLAGS) -c -o $$@ $$<
 
 OBJS_$(1) += $$(patsubst %.c,$$(BUILDDIR)/$(1)/%.o,$$(C_SRCS))
@@ -138,7 +138,7 @@ LIBTOCK_$(1) = $$(TOCK_USERLAND_BASE_DIR)/libtock/build/$(1)/libtock.a
 
 # Collect all desired built output.
 $$(BUILDDIR)/$(1)/$(1).elf: $$(OBJS_$(1)) $$(TOCK_USERLAND_BASE_DIR)/newlib/libc.a $$(LIBTOCK_$(1)) $$(LIBS_$(1)) $$(LAYOUT) | $$(BUILDDIR)/$(1)
-	$$(TRACE_LD)
+	$$(TRACE_LD) $(1)
 	$$(Q)$$(CC) $$(CFLAGS) -mcpu=$(1) $$(CPPFLAGS)\
 	    --entry=_start\
 	    -Xlinker --defsym=STACK_SIZE=$$(STACK_SIZE)\
@@ -151,11 +151,11 @@ $$(BUILDDIR)/$(1)/$(1).elf: $$(OBJS_$(1)) $$(TOCK_USERLAND_BASE_DIR)/newlib/libc
 	    -o $$@
 
 $$(BUILDDIR)/$(1)/$(1).bin: $$(BUILDDIR)/$(1)/$(1).elf | $$(BUILDDIR)/$(1) validate_gcc_flags
-	$$(TRACE_BIN)
+	$$(TRACE_BIN) $(1)
 	$$(Q)$$(ELF2TBF) $$(ELF2TBF_ARGS) -o $$@ $$<
 
 $$(BUILDDIR)/$(1)/$(1).lst: $$(BUILDDIR)/$(1)/$(1).elf
-	$$(TRACE_LST)
+	$$(TRACE_LST) $(1)
 	$$(Q)$$(OBJDUMP) $$(OBJDUMP_FLAGS) $$< > $$@
 
 # checks compiled ELF files to ensure that all libraries and applications were
